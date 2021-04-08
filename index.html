@@ -53,8 +53,12 @@
 			<div class="center">
 				<h1>Sivustoa Päivitetään / Website is being updated</h1>
 				<p>Sivusto on taas näkyvissä mahdollisimman pian! / The site will be back up asap!</p>
-				<img src="./img/temp.png" alt="logo">
+				<img src="/img/temp.png" alt="logo">
 			</div>
 		</div>
+		<script>
+			const lang = (navigator.language.toLowerCase().substring(0,2) === "fi" ? "fi" : "en")
+			location.replace("https://www.erantanen.com/" + lang + "/")
+		</script>
 	</body>
 </html>
