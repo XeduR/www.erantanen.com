@@ -49,16 +49,21 @@
 	</head>
 
 	<body>
-		<div class="full-height">
-			<div class="center">
-				<h1>Sivustoa Päivitetään / Website is being updated</h1>
-				<p>Sivusto on taas näkyvissä mahdollisimman pian! / The site will be back up asap!</p>
-				<img src="/img/temp.png" alt="logo">
-			</div>
-		</div>
 		<script>
+			// Direct all users whose browser isn't set to Finnish to the English language version of the site.
 			const lang = (navigator.language.toLowerCase().substring(0,2) === "fi" ? "fi" : "en")
 			location.replace("https://www.erantanen.com/" + lang + "/")
 		</script>
+		<noscript>
+			<!-- If the user disabled JavaScript and doesn't get redirected, then show the rest of the page. -->
+			<div class="full-height">
+				<div class="center">
+					<h1>We'll be right back up!</h1>
+					<p>You seem to have JavaScript disabled. Please enable it to fully use this site.</p>
+					<p>Proceed to <a href="https://www.erantanen.com/en/">English version</a> or <a href="https://www.erantanen.com/en/">Finnish version</a> of the page.</p>
+					<img src="/img/temp.png" alt="logo">
+				</div>
+			</div>
+		</noscript>
 	</body>
 </html>
