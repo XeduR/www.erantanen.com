@@ -1,0 +1,11 @@
+# Eetu Rantanen
+
+> Freelance software developer available for hire, with over 13 years of professional experience. Game development is the main focus, alongside web development, data and analytics, and AI solutions and consulting.
+
+Eetu Rantanen is based in Tampere, Finland and works remotely with clients worldwide, taking on contract, freelance, and permanent work. erantanen.com is a single-page site covering these services in detail, client testimonials, and contact information. Direct enquiries go to eetu@erantanen.com.
+
+## Links
+
+- [Home](https://www.erantanen.com/): Single-page site with services, service details, client testimonials, and contact.
+- [GitHub](https://github.com/XeduR/): Source code and open-source projects.
+- [Game design portfolio](https://www.xedur.com/): Game design work at xedur.com.

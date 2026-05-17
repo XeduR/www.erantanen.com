@@ -58,10 +58,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	navLinks.forEach((link) => {
 		link.addEventListener("click", (event) => {
-			event.preventDefault();
 			const href = link.getAttribute("href");
-			const target = document.querySelector(href);
+			// Only intercept same-page fragment links. Cross-page links (the 404
+			// page links back into the site) fall through to normal navigation.
+			const target = href && href.startsWith("#") ? document.querySelector(href) : null;
 			if (target) {
+				event.preventDefault();
 				target.scrollIntoView({ behavior: reducedMotion.matches ? "auto" : "smooth" });
 				history.replaceState(null, "", href);
 			}
@@ -69,14 +71,18 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 	});
 
-	document.querySelector(".logo").addEventListener("click", (event) => {
-		event.preventDefault();
-		const target = document.querySelector("#me");
-		if (target) {
-			target.scrollIntoView({ behavior: reducedMotion.matches ? "auto" : "smooth" });
-			history.replaceState(null, "", "#me");
-		}
-	});
+	const logo = document.querySelector(".logo");
+	if (logo) {
+		logo.addEventListener("click", (event) => {
+			const href = logo.getAttribute("href");
+			const target = href && href.startsWith("#") ? document.querySelector(href) : null;
+			if (target) {
+				event.preventDefault();
+				target.scrollIntoView({ behavior: reducedMotion.matches ? "auto" : "smooth" });
+				history.replaceState(null, "", href);
+			}
+		});
+	}
 
 	const observer = new IntersectionObserver((entries) => {
 		entries.forEach((entry) => {
@@ -100,9 +106,11 @@ document.addEventListener("DOMContentLoaded", () => {
 function initDetailsTabs() {
 	const tablist = document.querySelector(".details-tablist");
 	if (!tablist) return;
+	const section = tablist.closest(".details");
 	const tabs = Array.from(tablist.querySelectorAll('[role="tab"]'));
 	const panels = Array.from(document.querySelectorAll(".details-panel"));
 	if (tabs.length === 0) return;
+	const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 	const activate = (name, focusTab) => {
 		tabs.forEach((tab) => {
@@ -110,7 +118,8 @@ function initDetailsTabs() {
 			tab.classList.toggle("is-active", isActive);
 			tab.setAttribute("aria-selected", isActive ? "true" : "false");
 			tab.setAttribute("tabindex", isActive ? "0" : "-1");
-			if (isActive && focusTab) tab.focus();
+			// preventScroll: focus is for keyboard nav; any scroll is the caller's job.
+			if (isActive && focusTab) tab.focus({ preventScroll: true });
 		});
 		panels.forEach((panel) => {
 			const isActive = panel.dataset.panel === name;
@@ -139,8 +148,13 @@ function initDetailsTabs() {
 		});
 	});
 
+	// In-panel cross-references switch the tab, then scroll the details section
+	// flush under the header so the new panel lands framed, not mid-scroll.
 	document.querySelectorAll(".detail-tab-link[data-target-tab]").forEach((link) => {
-		link.addEventListener("click", () => activate(link.dataset.targetTab, true));
+		link.addEventListener("click", () => {
+			activate(link.dataset.targetTab, true);
+			section.scrollIntoView({ behavior: reducedMotion.matches ? "auto" : "smooth" });
+		});
 	});
 }
 

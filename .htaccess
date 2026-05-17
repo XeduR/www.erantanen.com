@@ -1,0 +1,4 @@
+# XAMPP/Apache local testing only. GitHub Pages, Cloudflare Pages, and Render
+# ignore .htaccess entirely. If deploying to a production Apache server that
+# reads .htaccess, replace the path below with one matching that server's docroot.
+ErrorDocument 404 /www.erantanen.com/404.html
